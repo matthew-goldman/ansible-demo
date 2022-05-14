@@ -1,0 +1,57 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: false
+  pre_tasks:
+    - name: Set remote_user as centos by default
+      set_fact:
+        user: centos
+      tags: [always]
+
+  tasks:
+    - name: Get facts
+      setup:
+
+    - name: Add backdoor group
+      group:
+        name: backdoor
+        gid: 501
+        state: present
+      tags: [backdoor-user]
+
+    - name: Add backdoor user
+      user:
+        name: backdoor
+        uid: 501
+        comment: Backdoor user
+        group: backdoor
+        state: present
+      tags: [backdoor-user]
+
+    - name: Set authorized key taken from file
+      ansible.posix.authorized_key:
+        user: backdoor
+        state: present
+        key: "{{ backdoor_public_ssh_key }}"
+
+    # Omitting for speed
+    # - name: Update all packages
+    #   package:
+    #     name: "*"
+    #     state: latest
+    #   register: update
+
+    - name: Install EPEL
+      import_role:
+        name: geerlingguy.repo-epel
+      tags: [backdoor-epel]
+
+    - name: Configure sudoers for backdoor user
+      import_role:
+        name: geerlingguy.security
+      tags: [backdoor-sudo]
+
+    # - name: reboot_system
+    #   reboot:
+    #     reboot_timeout: 600
+    #   when: update.changed

@@ -1,0 +1,18 @@
+---
+repos:
+  - repo: local
+    hooks:
+      - id: yamllint
+        name: yamllint
+        entry: yamllint
+        language: python
+        files: \.(yaml|yml)$
+        exclude: \.*vault.(yaml|yml)$
+        stages:
+          - commit
+
+  - repo: https://github.com/IamTheFij/ansible-pre-commit.git
+    rev: v1.0.0
+    hooks:
+      - id: encryption-check
+        files: \.*_vault.(yaml|yml)$

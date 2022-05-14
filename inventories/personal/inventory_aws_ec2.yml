@@ -1,0 +1,34 @@
+---
+plugin: amazon.aws.aws_ec2
+aws_profile: "{{ lookup('env', 'AWS_PROFILE') | default('aws_profile', true) }}"
+
+regions:
+  - us-east-1
+
+strict: False
+filters:
+  tag:Territory: tfdemo
+  tag:Project: aws
+  tag:Owner: mgoldman
+  instance-state-name: running
+
+hostnames:
+  - tag:Fqdn
+
+keyed_groups:
+  - prefix: aws_region
+    key: tags.Region
+
+  - prefix: aws_territory
+    key: tags.Territory
+
+  - prefix: aws
+    key: tags.Role
+    parent_group: aws_nodes
+
+  - prefix: aws
+    key: tags.Role + "_" + tags.Territory
+    parent_group: "aws_{{ tags.Role }}"
+
+compose:
+  ansible_host: tags.Fqdn

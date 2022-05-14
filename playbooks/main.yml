@@ -1,0 +1,6 @@
+---
+- name: Universal System Setup
+  import_playbook: system.yml
+
+- name: Deploy Docker App
+  import_playbook: docker.yml

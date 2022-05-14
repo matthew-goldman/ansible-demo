@@ -1,0 +1,17 @@
+extends: default
+
+ignore: |
+  roles/
+  .venv/
+  *vault.yml
+  collections/
+
+rules:
+  braces:
+    max-spaces-inside: 1
+    level: error
+  brackets:
+    max-spaces-inside: 1
+    level: error
+  truthy: disable
+  line-length: disable

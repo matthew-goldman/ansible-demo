@@ -1,0 +1,9 @@
+* text=auto
+
+# Define binary file attributes.
+# - Do not treat them as text.
+# - Include binary diff in patches instead of "binary files differ."
+*.jks    -text diff
+
+# ansible vault files should be considered binary files
+*_vault.yml binary

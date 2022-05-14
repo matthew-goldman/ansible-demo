@@ -1,0 +1,23 @@
+---
+ssh_print_motd: true
+ag_motd_sysadmins_signature: ""
+ag_motd_sysadmins_email: ""
+ag_motd_info: ""
+ag_motd_content: |
+  ████████╗███████╗      ██████╗ ███████╗███╗   ███╗ ██████╗
+  ╚══██╔══╝██╔════╝      ██╔══██╗██╔════╝████╗ ████║██╔═══██╗
+     ██║   █████╗  █████╗██║  ██║█████╗  ██╔████╔██║██║   ██║
+     ██║   ██╔══╝  ╚════╝██║  ██║██╔══╝  ██║╚██╔╝██║██║   ██║
+     ██║   ██║           ██████╔╝███████╗██║ ╚═╝ ██║╚██████╔╝
+     ╚═╝   ╚═╝           ╚═════╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝
+
+  -------------------------------------------------------------
+                This system is managed by Ansible
+  -------------------------------------------------------------
+
+  FQDN:        {{ tags.Fqdn }}
+  Environment: {{ tags.Environment }}
+  OS:          {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}
+  Virtual:     {{ 'YES' if ansible_virtualization_role == 'guest' else 'NO' }}
+  CPUs:        {{ ansible_processor_vcpus }}
+  RAM:         {{ (ansible_memtotal_mb / 1000) | round(1) }}GB

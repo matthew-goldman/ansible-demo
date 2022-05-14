@@ -1,0 +1,27 @@
+---
+- name: geerlingguy.security
+  version: 2.1.0
+
+- name: geerlingguy.repo-epel
+  version: 3.1.0
+
+- name: gabops.packages_os
+  version: 3.0.0
+
+- name: geerlingguy.pip
+  version: 2.1.0
+
+- name: adriagalin.motd
+  version: 2.1.0
+
+- name: yatesr.timezone
+  version: 1.2.0
+
+- name: linuxhq.selinux
+  version: v0.0.4
+
+- name: geerlingguy.docker
+  version: 4.2.2
+
+- name: baschny.color_prompt
+  version: 1.0.2

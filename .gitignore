@@ -1,0 +1,11 @@
+*.retry
+*.log
+tmp/
+.venv/
+.vscode
+roles/*
+!roles/requirements.yml
+!**.gitkeep
+.DS_Store
+**__pycache__
+collections/

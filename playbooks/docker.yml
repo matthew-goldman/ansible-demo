@@ -1,0 +1,24 @@
+---
+- hosts: aws_docker
+  become: yes
+  vars:
+    pip_install_packages:
+      - name: docker
+
+  tasks:
+    - name: Install Docker
+      import_role:
+        name: geerlingguy.docker
+
+    - name: Install pip
+      import_role:
+        name: geerlingguy.pip
+
+    - name: Run container on Port 80
+      community.general.docker_container:
+        name: hello_world
+        image: nginxdemos/nginx-hello
+        state: started
+        restart: yes
+        ports:
+          - "80:8080"

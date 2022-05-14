@@ -1,0 +1,30 @@
+---
+packages_os_common:
+  all:
+    dos2unix: present
+    file: present
+    mailx: present
+    man: present
+    mlocate: present
+    nc: present
+    ncdu: present
+    patch: present
+    perl: present
+    strace: present
+    tcpdump: present
+    tmux: present
+    unzip: present
+    vim-enhanced: present
+    wget: present
+    zip: present
+    lsof: present
+    sysstat: present
+    bind-utils: present
+    htop: present
+    iotop: present
+    psmisc: present               # Adds pstree and other good debugging tools
+    the_silver_searcher: present  # Adds 'ag' - a lightweight and powerful search tool
+    git: present
+    gcc: present
+    gcc-c++: present
+    net-tools: present

@@ -1,0 +1,60 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure hostname
+      block:
+        - name: Set hostname
+          hostname:
+            name: "{{ tags.Fqdn }}"
+
+        - name: Add hostname to /etc/hosts
+          lineinfile:
+            dest: /etc/hosts
+            regexp: .*{{ tags.Fqdn }}$
+            line: "{{ ansible_default_ipv4.address }}\t{{ tags.Fqdn }}"
+            state: present
+      tags: [hostname]
+
+    - name: Configure timezone
+      import_role:
+        name: yatesr.timezone
+      tags: [timezone]
+
+    - name: Configure selinux status
+      import_role:
+        name: linuxhq.selinux
+      tags: [selinux]
+
+    - name: Configure message of the day
+      import_role:
+        name: adriagalin.motd
+      tags: [motd]
+
+    - name: Install/uninstall system packages
+      import_role:
+        name: gabops.packages_os
+      vars:
+        packages_os: "{{
+          packages_os_common | default({}) |
+          combine(packages_os_group | default({}), recursive=True ) |
+          combine(packages_os_host | default({}), recursive=True )
+        }}"
+      tags: [packages]
+
+    - name: Configure prompt
+      import_role:
+        name: baschny.color_prompt
+      vars:
+        color_prompt_addon: "{{ tags.Territory }}"
+        color_prompt_schemas:
+          testing:
+            fg: IGreen
+            bg: BBlack
+          staging:
+            fg: IYellow
+            bg: BBlack
+          production:
+            fg: IRed
+            bg: BBlack
+      tags: [prompt]
